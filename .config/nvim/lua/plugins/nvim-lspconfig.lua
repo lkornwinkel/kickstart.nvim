@@ -22,9 +22,33 @@ return {
     -- Additional lua configuration, makes nvim stuff amazing!
     -- https://github.com/folke/neodev.nvim
     { 'folke/neodev.nvim', opts = {} },
+
+    {
+      'jay-babu/mason-nvim-dap.nvim',
+
+      event = 'VeryLazy',
+
+      dependencies = {
+        'williamboman/mason.nvim',
+        'mfussenegger/nvim-dap',
+      },
+
+      opts = {
+        handlers = {},
+      },
+
+      ensure_installed = {
+        'codelldb',
+      }
+    },
   },
   config = function ()
-    require('mason').setup()
+    require('mason').setup({
+      ensure_installed = {
+        'clang-format',
+        'codelldb',
+      }
+    })
     require('mason-lspconfig').setup({
       -- Install these LSPs automatically
       ensure_installed = {
@@ -33,7 +57,7 @@ return {
         'cssls',
         'html',
         'gradle_ls',
-        'groovyls',
+--        'groovyls',
         'lua_ls',
         'jdtls',
         'jsonls',
@@ -61,6 +85,7 @@ return {
     local lsp_attach = function(client, bufnr)
       -- Create your keybindings here...
     end
+
 
     -- Call setup on each LSP server
     require('mason-lspconfig').setup_handlers({
@@ -90,8 +115,13 @@ return {
     lspconfig.clangd.setup({
       cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
       init_options = {
-        fallbackFlags = { '-std=c++17' },
+        fallbackFlags = { '-std=c++23' },
       },
+      on_attach = function(client, bufnr)
+        client.server_capabilities.singnatureHelpProvider = false
+        lsp_attach(client, bufnr)
+      end,
+      capabilities = lsp_capabilities,
     })
 
     -- Globally configure all LSP floating preview popups (like hover, signature help, etc)

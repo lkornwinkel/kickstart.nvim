@@ -132,9 +132,9 @@ keymap.set("n", "<leader>bc", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input
 keymap.set("n", "<leader>bl", "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>")
 keymap.set("n", '<leader>br', "<cmd>lua require'dap'.clear_breakpoints()<cr>")
 keymap.set("n", '<leader>ba', '<cmd>Telescope dap list_breakpoints<cr>')
-keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>")
-keymap.set("n", "<leader>dj", "<cmd>lua require'dap'.step_over()<cr>")
-keymap.set("n", "<leader>dk", "<cmd>lua require'dap'.step_into()<cr>")
+keymap.set("n", "<F6>", "<cmd>lua require'dap'.continue()<cr>")
+keymap.set("n", "<F11>", "<cmd>lua require'dap'.step_over()<cr>")
+keymap.set("n", "<F12>", "<cmd>lua require'dap'.step_into()<cr>")
 keymap.set("n", "<leader>do", "<cmd>lua require'dap'.step_out()<cr>")
 keymap.set("n", '<leader>dd', function() require('dap').disconnect(); require('dapui').close(); end)
 keymap.set("n", '<leader>dt', function() require('dap').terminate(); require('dapui').close(); end)
@@ -145,4 +145,38 @@ keymap.set("n", '<leader>d?', function() local widgets = require "dap.ui.widgets
 keymap.set("n", '<leader>df', '<cmd>Telescope dap frames<cr>')
 keymap.set("n", '<leader>dh', '<cmd>Telescope dap commands<cr>')
 keymap.set("n", '<leader>de', function() require('telescope.builtin').diagnostics({default_text=":E:"}) end)
+
+
+-- CMake
+keymap.set("n", "<leader>cb", ":CMakeBuild<cr>")
+keymap.set("n", "<leader>cr", ":CMakeRun<cr>")
+keymap.set("n", "<leader>cc", ":CMakeClean<cr>")
+keymap.set("n", "<leader>cg", ":CMakeGenerate<cr>")
+
+-- Maven
+keymap.set("n", "<leader>mm", ":Maven<CR>")
+
+keymap.set("n", "<leader>mx", ":MavenExec<CR>")
+keymap.set("n", "<leader>ms", ":MavenExec spring-boot:run<CR>")
+keymap.set("n", "<leader>mf", ":MavenExec javafx:run<CR>")
+
+-- PlatformIO
+--
+keymap.set("n", "<leader>pb", ":Piorun build<cr>")
+keymap.set("n", "<leader>pc", ":Piorun clean<cr>")
+keymap.set("n", "<leader>pu", ":Piorun upload<cr>")
+keymap.set("n", "<leader>pd", ":Piodebug<cr>")
+
+-- CopilotChat
+--
+keymap.set("n", "<leader>ai", ":CopilotChat<cr>")
+
+-- Copilot Sense
+--
+
+  vim.keymap.set('i', '<C-a>', 'copilot#Accept("\\<CR>")', {
+    expr = true,
+    replace_keycodes = false
+  })
+  vim.g.copilot_no_tab_map = true
 

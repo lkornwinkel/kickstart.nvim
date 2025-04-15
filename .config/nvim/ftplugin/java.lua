@@ -62,7 +62,7 @@ local config = {
   settings = {
     java = {
       -- TODO Replace this with the absolute path to your main java version (JDK 17 or higher)
-      home = "/usr/lib/jvm/java-17-openjdk-amd64",
+      home = "/home/lars/opt/jdk-23.0.2",
       eclipse = {
         downloadSources = true,
       },
@@ -137,6 +137,7 @@ local config = {
       },
     },
   },
+
   -- Needed for auto-completion with method signatures and placeholders
   capabilities = require("cmp_nvim_lsp").default_capabilities(),
   flags = {

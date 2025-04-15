@@ -90,10 +90,23 @@ return {
   },
   config = function (_, opts)
     local dap = require('dap')
+    local dapui = require('dapui')
 
+    dapui.setup(opts)
+    
     dap.adapters.codelldb = {
-       type = 'executable',
-       command = '/home/lars/opt/codelldb/extension/codelldb',
+       --type = 'executable',
+        --command = '/home/lars/opt/codelldb/extension/adapter/codelldb',
+
+      type = 'server',
+      port= '${port}',
+      executable = {
+      
+        command = '/home/lars/opt/codelldb/extension/adapter/codelldb',
+        args = {'--port', '${port}'},
+
+      },
+
     }
 
     dap.configurations.cpp = {
@@ -113,8 +126,6 @@ return {
     dap.configurations.rust = dap.configurations.cpp
 
 
-    require('dapui').setup(opts)
-
     -- Customize breakpoint signs
     vim.api.nvim_set_hl(0, "DapStoppedHl", { fg = "#98BB6C", bg = "#2A2A2A", bold = true })
     vim.api.nvim_set_hl(0, "DapStoppedLineHl", { bg = "#204028", bold = true })
@@ -130,12 +141,12 @@ return {
 
     dap.listeners.before.event_terminated["dapui_config"] = function()
       -- Commented to prevent DAP UI from closing when unit tests finish
-      -- require('dapui').close()
+      require('dapui').close()
     end
 
     dap.listeners.before.event_exited["dapui_config"] = function()
       -- Commented to prevent DAP UI from closing when unit tests finish
-      -- require('dapui').close()
+      require('dapui').close()
     end
 
     -- Add dap configurations based on your language/adapter settings
